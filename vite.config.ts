@@ -12,9 +12,7 @@ export default defineConfig({
     vueDevTools(),
     vuetify({ styles: { configFile: 'src/app/plugins/vuetify/settings.scss' } }),
   ],
-  // build: {
-  //   outDir: "docs"
-  // },
+  base: '/alfa-test-task/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
