@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Run Git commands
         run: |
+          git config --global user.email "lekseff@gmail.com"
+          git config --global user.name "lekseff"
           # Install depedencies
           npm i
           # build
