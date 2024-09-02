@@ -3,8 +3,13 @@ import { ROUTE_NAMES } from '@/app/plugins/router/names'
 export const pageRoutes = [
   {
     path: '',
-    redirect: '/products',
+    // redirect: '/products',
+    component: () => import('@/pages/IndexPage.vue')
   },
+  // {
+  //   path: '',
+  //   redirect: '/products',
+  // },
   {
     path: '/products',
     children: [
