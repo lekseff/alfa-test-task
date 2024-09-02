@@ -1,1 +1,0 @@
-import{d as o,o as a,c as n,w as e,a as s,b as r,V as c,u as _,r as u,R as p}from"./index-C31-e2hC.js";const i=o({__name:"IndexPage",setup(d){return(l,m)=>{const t=u("RouterLink");return a(),n(t,{to:{name:_(p).products}},{default:e(()=>[s(c,null,{default:e(()=>[r("Продукты")]),_:1})]),_:1},8,["to"])}}});export{i as default};
