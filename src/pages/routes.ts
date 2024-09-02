@@ -6,10 +6,6 @@ export const pageRoutes = [
     name: 'mainPage',
     component: () => import('@/pages/IndexPage.vue')
   },
-  // {
-  //   path: '',
-  //   redirect: '/products',
-  // },
   {
     path: '/products',
     children: [

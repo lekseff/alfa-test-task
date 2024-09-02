@@ -1,0 +1,1 @@
+import{d as a,r as n,o as s,c as r,a as e,w as t,V as c,b as _,u,R as d}from"./index-D3Zm0497.js";const i={class:"d-flex justify-end"},k=a({__name:"BackButton",setup(p){return(l,m)=>{const o=n("RouterLink");return s(),r("div",i,[e(o,{to:{name:u(d).products}},{default:t(()=>[e(c,{variant:"outlined"},{default:t(()=>[_("На главную")]),_:1})]),_:1},8,["to"])])}}});export{k as _};

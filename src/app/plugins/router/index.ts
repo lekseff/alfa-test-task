@@ -7,7 +7,7 @@ import {
 import { pageRoutes } from '@/pages/routes'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: pageRoutes,
   scrollBehavior(to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded, savedPosition) {
     if (savedPosition) {
