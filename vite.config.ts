@@ -12,6 +12,9 @@ export default defineConfig({
     vueDevTools(),
     vuetify({ styles: { configFile: 'src/app/plugins/vuetify/settings.scss' } }),
   ],
+  build: {
+    outDir: "docs"
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
