@@ -4,7 +4,7 @@ import {
   type RouteLocationNormalized,
   type RouteLocationNormalizedLoaded
 } from 'vue-router'
-import { pageRoutes } from '@/pages/pageRoutes'
+import { pageRoutes } from '@/pages/routes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

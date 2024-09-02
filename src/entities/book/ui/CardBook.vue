@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { IBook } from '@/entities/book'
+import { BookRemoveButton } from '@/features/books/bookRemove'
 import { ChangeLikeButton } from '@/features/books/changeLike'
-import RemoveBookButton from '@/features/books/removeBook/ui/RemoveBookButton.vue'
 import noPhotoImg from '@/shared/assets/images/no-image.png'
 
 interface Props {
@@ -31,7 +31,7 @@ function onError() {
 <template>
   <div class="product-card card">
     <div class="card__image py-3">
-      <RemoveBookButton :id="book.number" class="card__remove-btn" />
+      <BookRemoveButton :id="book.number" class="card__remove-btn" />
       <ChangeLikeButton :id="book.number" class="card__like-btn" />
 
       <v-img :src="photo" :alt="book.title" @error="onError">

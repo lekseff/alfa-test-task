@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import { CardBook, useBookStore } from '@/entities/book'
+import { computed, onMounted, ref } from 'vue'
 import { ROUTE_NAMES } from '@/app/plugins/router/names'
+import { BookFilter } from '@/features/books/bookFilter'
+import { BookFilters, CardBook, CardLoader, type IBook, useBookStore } from '@/entities/book'
 
 const router = useRouter()
 const bookStore = useBookStore()
 
-const loading = ref(false)
 const { books } = storeToRefs(bookStore)
+
+const loading = ref(false)
+
+const booksList = computed((): IBook[] => {
+  return filteredBooks()
+})
 
 onMounted(async () => {
   if (!books.value.length) {
@@ -29,28 +35,64 @@ async function getProducts() {
   }
 }
 
-async function showFull(id: number) {
+/**
+ * Редирект на страницу подробного описания
+ * @param id
+ */
+async function onRedirectToProduct(id: number) {
   await router.push({ name: ROUTE_NAMES.product, params: { id } })
+}
+
+const activeFilter = ref()
+
+/**
+ * Фильтрует список
+ */
+function filteredBooks(): IBook[] {
+  let filtered = [...bookStore.books]
+
+  if (activeFilter.value === BookFilters.like) {
+    filtered = [...likesFilter()]
+  }
+  return filtered
+}
+
+/**
+ * Фильтрует по избранным
+ */
+function likesFilter() {
+  return bookStore.books.filter((b) => bookStore.isLike(b.number))
 }
 </script>
 
 <template>
   <main>
-    <section class="cards">
-      <!-- loader -->
-      <template v-if="loading">
-        <v-skeleton-loader
-          v-for="i in 9"
-          :key="i"
-          type="image, paragraph"
-          class="cards__loader align-start border rounded-lg"
-        />
-      </template>
-      <!-- content -->
-      <template v-else>
-        <CardBook v-for="book in books" :key="book.number" :book @click="showFull(book.number)" />
-      </template>
+    <div class="d-flex justify-end mb-6">
+      <RouterLink :to="{ name: ROUTE_NAMES.productCreate }">
+        <v-btn variant="outlined" color="primary" prepend-icon="mdi-plus">Добавить</v-btn>
+      </RouterLink>
+    </div>
+
+    <!-- filter -->
+    <BookFilter v-model="activeFilter" class="mb-6" />
+
+    <!-- loader -->
+    <div v-if="loading" class="cards">
+      <CardLoader v-for="i in 9" :key="i" />
+    </div>
+
+    <!-- content -->
+    <section v-if="!loading && booksList.length" class="cards">
+      <CardBook
+        v-for="book in booksList"
+        :key="book.number"
+        :book
+        @click="onRedirectToProduct(book.number)"
+      />
     </section>
+    <template v-else>
+      <h1 class="text-h3 text-textPrimary text-center mb-8 mb-sm-10 opacity-90">Список пуст</h1>
+    </template>
   </main>
 </template>
 
@@ -63,12 +105,5 @@ async function showFull(id: number) {
   gap: 1.5rem;
   margin: 0 auto;
   padding-inline: 1rem;
-
-  &__loader {
-    :deep(.v-skeleton-loader__image) {
-      height: 200px;
-      border-radius: 6px 6px 0 0;
-    }
-  }
 }
 </style>

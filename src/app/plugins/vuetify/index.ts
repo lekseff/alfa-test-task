@@ -12,7 +12,6 @@ const defaultTheme: ThemeDefinition = {
     error: '#F44336', // Ошибка
     danger: '#F44336', // Предупреждение
     warning: '#ff8a00',
-    background: '#FFFFFF', // Фон блоков
   },
 }
 

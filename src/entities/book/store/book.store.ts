@@ -1,7 +1,8 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { IBook } from '@/entities/book/types/book'
+import type { IBook } from '@/entities/book/types/book.types'
 import * as bookApi from '@/entities/book/api/book.api'
+import { useTextNotificationStore } from '@/entities/textNotification'
 
 export const useBookStore = defineStore('bookStore', () => {
   const books = ref<IBook[]>([])
@@ -20,8 +21,17 @@ export const useBookStore = defineStore('bookStore', () => {
       }
     } catch (error) {
       // Обработка ошибки
-      console.log(error)
+      const notificationStore = useTextNotificationStore()
+      notificationStore.onOpenError('Ошибка при загрузке каталога')
     }
+  }
+
+  /**
+   * Добаляет новую книгу
+   * @param book
+   */
+  function addBook(book: IBook) {
+    books.value.push(book)
   }
 
   /**
@@ -30,6 +40,9 @@ export const useBookStore = defineStore('bookStore', () => {
    */
   function removeBook(id: number) {
     books.value = books.value.filter((b) => b.number !== id)
+    if (isLike(id)) {
+      likes.value = likes.value.filter((l) => l !== id)
+    }
   }
 
   /**
@@ -72,5 +85,5 @@ export const useBookStore = defineStore('bookStore', () => {
     isLike(id) ? removeLike(id) : addLike(id)
   }
 
-  return { books, getBooks, getBookById, removeBook, changeLike, isLike }
+  return { books, getBooks, getBookById, addBook, removeBook, changeLike, isLike }
 })

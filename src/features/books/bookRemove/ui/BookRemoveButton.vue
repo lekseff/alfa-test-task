@@ -12,7 +12,7 @@ const props = defineProps<Props>()
 const dialog = ref()
 
 function onRemove() {
- bookStore.removeBook(props.id)
+  bookStore.removeBook(props.id)
 }
 </script>
 
